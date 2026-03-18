@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Chatbot from "./chatbot/Chatbot";  
+import WhatsAppButton  from "./chatbot/WhatsAppButton";
 
 const Home = lazy(() => import('./pages/Home'));
 const CoursesPage = lazy(() => import('./pages/CoursesPage'));
@@ -29,6 +31,8 @@ export default function App() {
             </Routes>
           </Suspense>
         </main>
+        <Chatbot />
+        <WhatsAppButton />
         <Footer />
       </div>
     </Router>
