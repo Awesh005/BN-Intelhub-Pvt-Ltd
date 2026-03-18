@@ -1,10 +1,12 @@
 // Chatbot.tsx
 // BN Intelhub — AI Chatbot
 //
-// LAYOUT:
-//   FAB button  → stays in navbar (top, right: 880px) — AI talking icon
-//   Chat window → opens BOTTOM-RIGHT (above WhatsApp button)
-//                 origin: bottom-right corner, animates upward
+// DESKTOP (≥1024px): FAB at top:17px, right:935px (navbar) ← UNCHANGED
+// MOBILE  (<1024px): FAB at bottom-RIGHT, stacked ABOVE WhatsApp button
+//   WhatsApp → bottom: 24px,  right: 16px
+//   AI FAB   → bottom: 90px,  right: 16px  (24 + 56 + 10 gap)
+//
+// CHAT WINDOW: Always bottom-right on all screen sizes
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
@@ -50,7 +52,7 @@ const WhatsAppCTA: React.FC<{ message: string }> = ({ message }) => (
   </a>
 );
 
-// ─── Sound Wave Bars (AI Talking Icon) ───────────────────────────────────────
+// ─── Sound Wave Bars ──────────────────────────────────────────────────────────
 
 const SoundWaveBars: React.FC<{ size?: "sm" | "md" }> = ({ size = "md" }) => {
   const barW = size === "sm" ? 2 : 3;
@@ -237,9 +239,25 @@ const SuggestionsPanel: React.FC<{
   );
 };
 
+// ─── useIsMobile ──────────────────────────────────────────────────────────────
+
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" ? window.innerWidth < 1024 : false
+  );
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 1024);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return isMobile;
+}
+
 // ─── Main Chatbot ─────────────────────────────────────────────────────────────
 
 const Chatbot: React.FC = () => {
+  const isMobile = useIsMobile();
+
   const [isOpen,            setIsOpen]            = useState(false);
   const [hovered,           setHovered]           = useState(false);
   const [messages,          setMessages]          = useState<ChatMessageEx[]>([]);
@@ -304,30 +322,42 @@ const Chatbot: React.FC = () => {
     }]);
   };
 
-  // ── FAB position (navbar, unchanged) ────────────────────────────────────
-  const FAB_RIGHT = "935px";
-  const FAB_TOP   = "17px";
+  // ─────────────────────────────────────────────────────────────────────────
+  // POSITION LOGIC
+  //
+  // WhatsAppButton.tsx uses:  bottom: 24px,  right: 24px  (56px tall)
+  //
+  // Desktop FAB (unchanged):  top: 17px,     right: 935px
+  //
+  // Mobile FAB (NEW — stacked above WhatsApp on same right side):
+  //   right: 16px   ← aligns with WhatsApp (right: 24px center ≈ 16px edge)
+  //   bottom: 90px  ← 24px + 56px (WA height) + 10px gap = 90px
+  //
+  // Mobile chat window:
+  //   right: 16px, bottom: 160px (above the two FABs)
+  //   width: calc(100vw - 32px) capped at 370px
+  // ─────────────────────────────────────────────────────────────────────────
 
-  // ── Chat WINDOW position — BOTTOM-RIGHT ──────────────────────────────────
-  // Sits just above the WhatsApp button (bottom: 96px = 24px gap + 56px WA btn + 16px spacing)
-  // right: 24px — same right edge as WhatsApp button
-  const WIN_BOTTOM = "96px";
-  const WIN_RIGHT  = "24px";
+  // FAB position
+  const fabStyle: React.CSSProperties = isMobile
+    ? { position: "fixed", bottom: "90px", right: "24px", zIndex: 200 }
+    : { position: "fixed", top: "17px",    right: "935px", zIndex: 200 };
+
+  // Chat window position — bottom-right always, but on mobile sits higher
+  const windowStyle: React.CSSProperties = isMobile
+    ? { bottom: "160px", right: "16px", left: "auto", width: "calc(100vw - 32px)", maxWidth: "370px" }
+    : { bottom: "96px",  right: "24px", left: "auto", width: "370px" };
 
   return (
     <>
-      {/* ════════════════════════════════════════════════════════════════════
-          FAB BUTTON — navbar position (top-right area)
-          AI talking icon with animated sound wave bars
-      ════════════════════════════════════════════════════════════════════ */}
+      {/* ── FAB ─────────────────────────────────────────────────────────── */}
       <div
-        className="fixed z-[200]"
-        style={{ top: FAB_TOP, right: FAB_RIGHT }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        style={fabStyle}
+        onMouseEnter={() => !isMobile && setHovered(true)}
+        onMouseLeave={() => !isMobile && setHovered(false)}
       >
-        {/* Hover tooltip */}
-        {hovered && !isOpen && (
+        {/* Desktop hover tooltip only */}
+        {hovered && !isOpen && !isMobile && (
           <div
             className="absolute top-full left-1/2 mt-2.5 -translate-x-1/2 whitespace-nowrap
                        text-white text-xs font-semibold px-3 py-1.5 rounded-lg
@@ -349,13 +379,13 @@ const Chatbot: React.FC = () => {
           </div>
         )}
 
-        {/* FAB — AI talking orb (closed) / close X (open) */}
+        {/* AI orb / close */}
         {!isOpen ? (
           <button
             onClick={() => setIsOpen(true)}
             aria-label="Open chat"
             className="relative flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-            style={{ width: 46, height: 46 }}
+            style={{ width: isMobile ? 52 : 46, height: isMobile ? 52 : 46 }}
           >
             {/* Glow rings */}
             <span className="absolute rounded-full" style={{
@@ -380,7 +410,7 @@ const Chatbot: React.FC = () => {
             }} />
             {/* Wave bars */}
             <span className="relative z-10"><SoundWaveBars size="md" /></span>
-            {/* Badge */}
+            {/* Unread badge */}
             {unreadCount > 0 && (
               <span className="absolute flex items-center justify-center text-white font-bold rounded-full"
                 style={{
@@ -398,7 +428,7 @@ const Chatbot: React.FC = () => {
             onClick={() => setIsOpen(false)}
             aria-label="Close chat"
             className="relative flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-            style={{ width: 46, height: 46 }}
+            style={{ width: isMobile ? 52 : 46, height: isMobile ? 52 : 46 }}
           >
             <span className="absolute inset-0 rounded-full" style={{
               background: "linear-gradient(135deg,#6366f1,#8b5cf6)",
@@ -413,20 +443,16 @@ const Chatbot: React.FC = () => {
         )}
       </div>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          CHAT WINDOW — BOTTOM-RIGHT (above WhatsApp button)
-          origin: bottom-right → animates upward when opening
-      ════════════════════════════════════════════════════════════════════ */}
+      {/* ── Chat Window — bottom-right always ────────────────────────────── */}
       <div
-        className={`fixed z-[9998] w-[370px] max-h-[580px] flex flex-col rounded-3xl overflow-hidden
+        className={`fixed z-[9998] max-h-[580px] flex flex-col rounded-3xl overflow-hidden
                     border border-slate-200/60 transition-all duration-500 origin-bottom-right ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-90 translate-y-4 pointer-events-none"
         }`}
         style={{
-          bottom: WIN_BOTTOM,
-          right:  WIN_RIGHT,
+          ...windowStyle,
           backdropFilter: "blur(20px)",
           boxShadow: "0 -8px 40px rgba(0,0,0,0.12), 0 20px 60px rgba(0,0,0,0.1), 0 0 0 1px rgba(99,102,241,0.08)",
         }}
@@ -434,8 +460,6 @@ const Chatbot: React.FC = () => {
         {/* Header */}
         <div className="px-5 py-4 flex items-center gap-3 shrink-0"
           style={{ background: "linear-gradient(135deg,#1d4ed8 0%,#4f46e5 60%,#7c3aed 100%)" }}>
-
-          {/* Avatar — talking orb */}
           <div className="relative shrink-0">
             <div className="w-11 h-11 rounded-full flex items-center justify-center overflow-hidden relative"
               style={{
@@ -479,7 +503,7 @@ const Chatbot: React.FC = () => {
           </button>
         </div>
 
-        {/* Rainbow shimmer line */}
+        {/* Rainbow shimmer */}
         <div className="h-[2px] shrink-0" style={{
           background: "linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6,#ec4899,#8b5cf6,#6366f1,#3b82f6)",
           backgroundSize: "200% 100%",
