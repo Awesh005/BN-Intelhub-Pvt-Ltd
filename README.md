@@ -1,4 +1,5 @@
 # BN IntelHub Pvt Ltd Website
+already updated 
 
 Modern single-page marketing site for **BN IntelHub Pvt Ltd**, built with React, Vite, and Tailwind CSS. It showcases services, internships, company information, and provides contact and application forms integrated with Google Forms.
 
