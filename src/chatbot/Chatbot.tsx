@@ -327,7 +327,7 @@ const Chatbot: React.FC = () => {
   //
   // WhatsAppButton.tsx uses:  bottom: 24px,  right: 24px  (56px tall)
   //
-  // Desktop FAB (unchanged):  top: 17px,     right: 935px
+  // Desktop FAB:              top: 17px,     right: 975px
   //
   // Mobile FAB (NEW — stacked above WhatsApp on same right side):
   //   right: 16px   ← aligns with WhatsApp (right: 24px center ≈ 16px edge)
@@ -341,7 +341,7 @@ const Chatbot: React.FC = () => {
   // FAB position
   const fabStyle: React.CSSProperties = isMobile
     ? { position: "fixed", bottom: "90px", right: "24px", zIndex: 200 }
-    : { position: "fixed", top: "17px",    right: "935px", zIndex: 200 };
+    : { position: "fixed", top: "17px",    right: "975px", zIndex: 200 };
 
   // Chat window position — bottom-right always, but on mobile sits higher
   const windowStyle: React.CSSProperties = isMobile

@@ -44,6 +44,12 @@ export default function Navbar() {
     to: string,
   ) => {
     e.preventDefault();
+    if (to.startsWith("http://") || to.startsWith("https://")) {
+      window.location.href = to;
+      setIsOpen(false);
+      return;
+    }
+
     if (to.startsWith("/#")) {
       const id = to.substring(2);
       if (location.pathname !== "/") {
@@ -65,7 +71,11 @@ export default function Navbar() {
     { name: "Home", to: "/", icon: <Home size={20} /> },
     { name: "Programs", to: "/courses", icon: <BookOpen size={20} /> },
     { name: "Internship", to: "/internships", icon: <Briefcase size={20} /> },
-    { name: "Development Services", to: "/services", icon: <Code size={20} /> },
+    {
+      name: "Development Services",
+      to: "https://service.bnintelhub.com/",
+      icon: <Code size={20} />,
+    },
     { name: "About Us", to: "/about", icon: <Users size={20} /> },
   ];
 
