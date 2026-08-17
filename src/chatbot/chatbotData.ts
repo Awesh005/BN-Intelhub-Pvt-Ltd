@@ -110,9 +110,9 @@ export const FAQ_DATA: FAQEntry[] = [
 
   // ── Cloud & IT Support ─────────────────────────────────────────────────────
   {
-    keywords: ["cloud", "cloud computing", "it support", "aws", "azure", "hosting", "server", "devops", "network", "cybersecurity"],
+    keywords: ["cloud", "cloud computing", "it support", "aws", "azure", "hosting", "server", "devops", "network"],
     answer:
-      "☁️ **Cloud & IT Support** at BN Intelhub:\n\n• Cloud setup (AWS, Azure, Google Cloud)\n• Server hosting & management\n• DevOps & CI/CD pipelines\n• Network setup & IT infrastructure\n• Cybersecurity solutions\n• 24/7 technical support",
+      "☁️ **Cloud & IT Support** at BN Intelhub:\n\n• Cloud setup (AWS, Azure, Google Cloud)\n• Server hosting & management\n• DevOps & CI/CD pipelines\n• Network setup & IT infrastructure\n• 24/7 technical support",
     type: "redirect",
     whatsapp: "Hello BN Intelhub! ☁️ I need Cloud & IT Support services. Can we connect?",
   },

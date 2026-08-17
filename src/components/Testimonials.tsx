@@ -8,11 +8,11 @@ export default function Testimonials() {
   return (
     <SectionWrapper background="light">
       <Container>
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display text-slate-900">Student Stories</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
           {TESTIMONIALS.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -21,8 +21,8 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="p-8 relative h-full bg-white border-slate-200 shadow-sm hover:shadow-md">
-                <Quote className="absolute top-8 right-8 text-blue-100" size={40} />
+              <Card className="p-5 sm:p-8 relative h-full bg-white border-slate-200 shadow-sm hover:shadow-md">
+                <Quote className="absolute top-5 right-5 sm:top-8 sm:right-8 text-orange-100" size={40} />
                 
                 <p className="text-slate-600 mb-8 leading-relaxed relative z-10">
                   "{testimonial.content}"
@@ -37,7 +37,7 @@ export default function Testimonials() {
                   />
                   <div>
                     <h4 className="font-bold text-slate-900">{testimonial.name}</h4>
-                    <p className="text-xs text-blue-600">{testimonial.role}</p>
+                    <p className="text-xs text-orange-600">{testimonial.role}</p>
                   </div>
                 </div>
               </Card>

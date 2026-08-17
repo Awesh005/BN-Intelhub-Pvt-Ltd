@@ -551,7 +551,7 @@ export const TESTIMONIALS = [
   {
     id: 3,
     name: "Sanjay Verma",
-    role: "Cyber Security Analyst",
+    role: "Software Engineer",
     content: "Excellent instructors and a supportive community. Highly recommended for anyone looking to upskill.",
     avatar: "./image3.png"
   }

@@ -6,11 +6,12 @@ import {
   BookOpen,
   Briefcase,
   Code,
+  GraduationCap,
   Users,
   Phone,
   ChevronRight,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PrimaryButton } from "./ui/Buttons";
 
@@ -20,6 +21,16 @@ export default function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const isActive = (to: string) => {
+    if (to.startsWith("http")) return false;
+    if (to === "/") return location.pathname === "/";
+    return location.pathname === to;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,8 +50,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const handleNavigation = (
-    e: React.MouseEvent<HTMLAnchorElement>,
+    e: MouseEvent<HTMLAnchorElement>,
     to: string,
   ) => {
     e.preventDefault();
@@ -51,18 +69,18 @@ export default function Navbar() {
     }
 
     if (to.startsWith("/#")) {
-      const id = to.substring(2);
-      if (location.pathname !== "/") {
-        navigate("/");
-        setTimeout(() => {
-          document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        }, 100);
+      const hash = to.slice(1);
+      const id = hash.slice(1);
+
+      if (location.pathname === "/" && location.hash === hash) {
+        scrollToSection(id);
       } else {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        navigate(to);
       }
+    } else if (location.pathname === to) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       navigate(to);
-      window.scrollTo(0, 0);
     }
     setIsOpen(false);
   };
@@ -70,7 +88,8 @@ export default function Navbar() {
   const menuItems = [
     { name: "Home", to: "/", icon: <Home size={20} /> },
     { name: "Programs", to: "/courses", icon: <BookOpen size={20} /> },
-    { name: "Internship", to: "/internships", icon: <Briefcase size={20} /> },
+    { name: "Bootcamp", to: "/internships", icon: <GraduationCap size={20} /> },
+    { name: "Internship", to: "/bootcamp", icon: <Briefcase size={20} /> },
     {
       name: "Development Services",
       to: "https://service.bnintelhub.com/",
@@ -83,21 +102,25 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm"
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+        scrolled
+          ? "border-slate-200/90 bg-white/95 shadow-lg shadow-slate-900/5 backdrop-blur-md"
+          : "border-slate-200 bg-white/88 shadow-sm backdrop-blur-sm"
+      }`}
     >
-      {/* 🔥 Scroll Progress Bar */}
-      <div className="absolute top-0 left-0 w-full h-[3px] z-[60]">
+      {/* Scroll progress bar */}
+      <div className="absolute top-0 left-0 w-full h-[3px] z-30">
         <div
-          className="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 transition-all duration-200 ease-out shadow-[0_0_10px_#3b82f6]"
+          className="h-full bg-gradient-to-r from-orange-500 via-yellow-300 to-amber-500 transition-all duration-200 ease-out shadow-[0_0_10px_rgba(249,115,22,0.6)]"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white/95 lg:bg-transparent">
         <div className="flex items-center justify-between h-20">
           <Link
             to="/"
-            className="flex items-center flex-shrink-0"
+            className="flex items-center flex-shrink-0 rounded-lg"
             onClick={() => {
               setIsOpen(false);
               window.scrollTo(0, 0);
@@ -106,41 +129,35 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="BN IntelHub Pvt Ltd Logo"
-              className="h-12 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </Link>
 
           <div className="hidden lg:block">
-            <div className="ml-10 flex items-center space-x-8">
+            <div className="ml-10 flex items-center gap-2 xl:gap-5">
               {menuItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.to}
                   onClick={(e) => handleNavigation(e, item.to)}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
-                    location.pathname === item.to
-                      ? "text-blue-600"
-                      : "text-slate-600 hover:text-blue-600"
+                  className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive(item.to)
+                      ? "text-orange-600"
+                      : "text-slate-600 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   {item.name}
                 </a>
               ))}
               <PrimaryButton
-                className="px-6 py-2.5 text-sm h-auto"
-                onClick={() => {
-                  if (location.pathname !== "/") {
-                    navigate("/");
-                    setTimeout(() => {
-                      document
-                        .getElementById("contact")
-                        ?.scrollIntoView({ behavior: "smooth" });
-                    }, 100);
-                  } else {
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }
+                  className="px-6 py-2.5 text-sm h-auto"
+                  onClick={() => {
+                    if (location.pathname === "/" && location.hash === "#contact") {
+                      scrollToSection("contact");
+                    } else {
+                      navigate("/#contact");
+                    }
+                    setIsOpen(false);
                 }}
               >
                 Contact Us
@@ -151,7 +168,9 @@ export default function Navbar() {
           <div className="lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-600 hover:text-slate-900 p-2 transition-transform active:scale-95"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              className="rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 p-2 transition-transform active:scale-95"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -168,13 +187,13 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 top-20 bg-slate-900/20 backdrop-blur-sm z-[-1]"
+              className="fixed inset-0 top-20 z-0 bg-slate-900/35 backdrop-blur-sm"
             />
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-b border-gray-200 shadow-xl overflow-hidden"
+              className="relative z-10 lg:hidden bg-white border-b border-gray-200 shadow-xl overflow-y-auto max-h-[calc(100vh-5rem)]"
             >
               <div className="px-4 pt-4 pb-8 space-y-3">
                 {menuItems.map((item, index) => (
@@ -186,9 +205,9 @@ export default function Navbar() {
                     transition={{ delay: index * 0.05 }}
                     onClick={(e) => handleNavigation(e, item.to)}
                     className={`flex items-center justify-between px-4 py-4 rounded-xl text-base font-medium transition-all ${
-                      location.pathname === item.to
-                        ? "text-blue-600 bg-blue-50 border border-blue-100"
-                        : "text-slate-600 hover:text-blue-600 hover:bg-slate-50 border border-transparent"
+                      isActive(item.to)
+                        ? "text-orange-700 bg-orange-50 border border-orange-100"
+                        : "text-slate-600 hover:text-orange-700 hover:bg-orange-50 border border-transparent"
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -197,7 +216,7 @@ export default function Navbar() {
                     </div>
                     <ChevronRight
                       size={16}
-                      className={`opacity-50 ${location.pathname === item.to ? "text-blue-600" : ""}`}
+                      className={`opacity-50 ${isActive(item.to) ? "text-orange-600" : ""}`}
                     />
                   </motion.a>
                 ))}
@@ -209,21 +228,14 @@ export default function Navbar() {
                   className="pt-4"
                 >
                   <PrimaryButton
-                    className="w-full justify-center py-4 text-lg shadow-lg shadow-blue-500/20"
+                    className="w-full justify-center py-4 text-lg shadow-lg shadow-orange-500/20"
                     onClick={() => {
-                      setIsOpen(false);
-                      if (location.pathname !== "/") {
-                        navigate("/");
-                        setTimeout(() => {
-                          document
-                            .getElementById("contact")
-                            ?.scrollIntoView({ behavior: "smooth" });
-                        }, 100);
+                      if (location.pathname === "/" && location.hash === "#contact") {
+                        scrollToSection("contact");
                       } else {
-                        document
-                          .getElementById("contact")
-                          ?.scrollIntoView({ behavior: "smooth" });
+                        navigate("/#contact");
                       }
+                      setIsOpen(false);
                     }}
                   >
                     <Phone size={20} className="mr-2" />

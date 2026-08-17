@@ -8,20 +8,22 @@ import {
   MapPin,
   ArrowRight,
 } from "lucide-react";
+import { Link } from 'react-router-dom';
 import { InputField } from "./ui/InputField";
 import { PrimaryButton } from "./ui/Buttons";
+import { LocationTag } from "./ui/location-tag";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 border-t border-slate-800 pt-20 pb-10 text-slate-300">
+    <footer className="bg-slate-900 border-t border-slate-800 pt-14 sm:pt-20 pb-10 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12 sm:mb-16">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img
                 src="/logoWhite.png"
                 alt="BN IntelHub Pvt Ltd Logo"
-                className="h-12.5 w-auto object-contain"
+                className="h-12 w-auto object-contain"
               />
             </div>
 
@@ -36,7 +38,7 @@ export default function Footer() {
                 href="https://www.instagram.com/bn_intel_hub"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-white transition-colors bg-slate-800 p-2 rounded-full hover:bg-gradient-to-tr hover:from-pink-500 hover:to-yellow-500"
+                className="text-slate-400 hover:text-slate-950 transition-colors bg-slate-800 p-2 rounded-full hover:bg-gradient-to-tr hover:from-orange-500 hover:to-yellow-400"
               >
                 <Instagram size={20} />
               </a>
@@ -46,27 +48,25 @@ export default function Footer() {
                 href="https://www.facebook.com/profile.php?id=61575484154751"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-white transition-colors bg-slate-800 p-2 rounded-full hover:bg-blue-600"
+                className="text-slate-400 hover:text-slate-950 transition-colors bg-slate-800 p-2 rounded-full hover:bg-orange-400"
               >
                 <Facebook size={20} />
               </a>
 
-              {/* Twitter (Future) */}
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-400 hover:text-white transition-colors bg-slate-800 p-2 rounded-full hover:bg-sky-500"
+              <span
+                aria-label="Twitter coming soon"
+                title="Twitter coming soon"
+                className="text-slate-500 bg-slate-800/70 p-2 rounded-full cursor-not-allowed"
               >
                 <Twitter size={20} />
-              </a>
+              </span>
 
-              {/* LinkedIn (Future) */}
+              {/* LinkedIn */}
               <a
-                href="#"
+                href="https://www.linkedin.com/company/bn-intelhub-pvt-ltd/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-white transition-colors bg-slate-800 p-2 rounded-full hover:bg-blue-700"
+                className="text-slate-400 hover:text-slate-950 transition-colors bg-slate-800 p-2 rounded-full hover:bg-orange-400"
               >
                 <Linkedin size={20} />
               </a>
@@ -76,13 +76,13 @@ export default function Footer() {
               <h5 className="text-white font-bold mb-3">
                 Subscribe to our newsletter
               </h5>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <InputField
                   placeholder="Enter your email"
                   className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
                 />
                 <PrimaryButton
-                  className="px-6 py-2 text-sm bg-blue-600 hover:bg-blue-700 border-none"
+                  className="px-6 py-3 sm:py-2 text-sm border-none"
                   icon={<ArrowRight size={16} />}
                 >
                   Subscribe
@@ -95,35 +95,34 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-6">Company</h4>
             <ul className="space-y-4 text-slate-400">
               <li>
-                <a
-                  href="/about"
-                  className="hover:text-blue-400 transition-colors"
-                >
+                <Link to="/about" className="hover:text-orange-300 transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
+                <span className="text-slate-500 cursor-not-allowed" title="Careers page coming soon">
                   Careers
-                </a>
+                </span>
               </li>
               <li>
-                <a
-                  href="/#services"
-                  className="hover:text-blue-400 transition-colors"
-                >
+                <Link to="/#services" className="hover:text-orange-300 transition-colors">
                   Development Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
+                <Link to="/privacy-policy" className="hover:text-orange-300 transition-colors">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
+                <Link to="/terms-and-conditions" className="hover:text-orange-300 transition-colors">
                   Terms & Conditions
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/cancellation-refund-policy" className="hover:text-orange-300 transition-colors">
+                  Cancellation & Refund Policy
+                </Link>
               </li>
             </ul>
           </div>
@@ -136,7 +135,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin
                   size={20}
-                  className="text-blue-500 mt-1 flex-shrink-0"
+                  className="text-orange-400 mt-1 flex-shrink-0"
                 />
                 <a
                   href="https://www.google.com/maps/search/?api=1&query=STPI+Plot-8+Part+Namkum+Industrial+Area+Namkum+Ranchi+834010"
@@ -151,7 +150,7 @@ export default function Footer() {
 
               {/* Phone - Direct Call */}
               <li className="flex items-center gap-3">
-                <Phone size={20} className="text-blue-500 flex-shrink-0" />
+                <Phone size={20} className="text-orange-400 flex-shrink-0" />
                 <a
                   href="tel:+918936078905"
                   className="hover:text-white transition"
@@ -162,7 +161,7 @@ export default function Footer() {
 
               {/* Email - Opens Mail App */}
               <li className="flex items-center gap-3">
-                <Mail size={20} className="text-blue-500 flex-shrink-0" />
+                <Mail size={20} className="text-orange-400 flex-shrink-0" />
                 <a
                   href="mailto:bnintelhub@gmail.com"
                   className="hover:text-white transition"
@@ -171,7 +170,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail size={20} className="text-blue-500 flex-shrink-0" />
+                <Mail size={20} className="text-orange-400 flex-shrink-0" />
                 <a
                   href="mailto:bnintelhub.services@gmail.com"
                   className="hover:text-white transition"
@@ -180,6 +179,13 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+
+            <div className="mt-6 flex flex-col gap-3">
+              <p className="text-xs uppercase tracking-widest text-slate-500">
+                Local Time
+              </p>
+              <LocationTag city="Ranchi" country="India" timezone="IST" />
+            </div>
           </div>
         </div>
 
@@ -196,9 +202,6 @@ export default function Footer() {
               className="hover:text-white"
             >
               View on Map
-            </a>{" "}
-            <a href="#" className="hover:text-white">
-              Disclaimer
             </a>
           </div>
         </div>

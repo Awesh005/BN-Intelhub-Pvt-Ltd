@@ -38,7 +38,7 @@ export default function CoursesPage() {
         <Container>
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 font-display text-slate-900">
-              Explore Our <span className="text-blue-600">Courses</span>
+              Explore Our <span className="text-orange-600">Courses</span>
             </h1>
             <p className="text-slate-600 max-w-2xl mx-auto text-lg">
               Find the perfect program to accelerate your career growth.
@@ -74,9 +74,9 @@ export default function CoursesPage() {
                             name="level" 
                             checked={selectedLevel === level}
                             onChange={() => setSelectedLevel(level)}
-                            className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
+                            className="w-4 h-4 text-orange-600 border-slate-300 focus:ring-orange-500"
                           />
-                          <span className="text-slate-600 text-sm group-hover:text-blue-600 transition-colors">{level}</span>
+                          <span className="text-slate-600 text-sm group-hover:text-orange-600 transition-colors">{level}</span>
                         </label>
                       ))}
                     </div>
@@ -92,9 +92,9 @@ export default function CoursesPage() {
                             name="duration" 
                             checked={selectedDuration === duration}
                             onChange={() => setSelectedDuration(duration)}
-                            className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
+                            className="w-4 h-4 text-orange-600 border-slate-300 focus:ring-orange-500"
                           />
-                          <span className="text-slate-600 text-sm group-hover:text-blue-600 transition-colors">{duration}</span>
+                          <span className="text-slate-600 text-sm group-hover:text-orange-600 transition-colors">{duration}</span>
                         </label>
                       ))}
                     </div>
@@ -131,8 +131,8 @@ export default function CoursesPage() {
                               onClick={() => setSelectedLevel(selectedLevel === level ? null : level)}
                               className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                                 selectedLevel === level 
-                                  ? 'bg-blue-50 border-blue-200 text-blue-700' 
-                                  : 'bg-white border-slate-200 text-slate-600 hover:border-blue-200'
+                                  ? 'bg-orange-50 border-orange-200 text-orange-700' 
+                                  : 'bg-white border-slate-200 text-slate-600 hover:border-orange-200'
                               }`}
                             >
                               {level}
@@ -150,8 +150,8 @@ export default function CoursesPage() {
                               onClick={() => setSelectedDuration(selectedDuration === duration ? null : duration)}
                               className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                                 selectedDuration === duration 
-                                  ? 'bg-blue-50 border-blue-200 text-blue-700' 
-                                  : 'bg-white border-slate-200 text-slate-600 hover:border-blue-200'
+                                  ? 'bg-orange-50 border-orange-200 text-orange-700' 
+                                  : 'bg-white border-slate-200 text-slate-600 hover:border-orange-200'
                               }`}
                             >
                               {duration}
@@ -182,7 +182,7 @@ export default function CoursesPage() {
                   placeholder="Search courses by name, technology, or keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all shadow-sm text-slate-700"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all shadow-sm text-slate-700"
                 />
               </div>
 
@@ -200,10 +200,10 @@ export default function CoursesPage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:border-blue-200 transition-all duration-300 flex flex-col h-full group"
+                      className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:border-orange-200 transition-all duration-300 flex flex-col h-full group"
                     >
                       <div className="mb-4 flex items-start justify-between">
-                        <div className="p-3 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                        <div className="p-3 rounded-xl bg-orange-50 text-orange-600 group-hover:bg-orange-500 group-hover:text-slate-950 transition-colors duration-300">
                           {course.icon}
                         </div>
                         <Badge variant="secondary" className="bg-slate-100 text-slate-600 text-xs">
@@ -211,7 +211,7 @@ export default function CoursesPage() {
                         </Badge>
                       </div>
 
-                      <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">
+                      <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-1">
                         {course.title}
                       </h3>
                       
@@ -238,7 +238,7 @@ export default function CoursesPage() {
                           )}
                         </div>
 
-                        <PrimaryButton className="w-full py-2.5 text-sm justify-center bg-slate-900 hover:bg-blue-600 border-none shadow-none">
+                        <PrimaryButton className="w-full py-2.5 text-sm justify-center bg-slate-900 text-white hover:bg-orange-500 hover:text-slate-950 border-none shadow-none">
                           View Details
                         </PrimaryButton>
                       </div>
@@ -254,7 +254,7 @@ export default function CoursesPage() {
                   <p className="text-slate-500 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
                   <button 
                     onClick={clearFilters}
-                    className="text-blue-600 font-medium hover:underline"
+                    className="text-orange-600 font-medium hover:underline"
                   >
                     Clear all filters
                   </button>

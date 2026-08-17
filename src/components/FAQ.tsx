@@ -33,12 +33,12 @@ export default function FAQ() {
   return (
     <SectionWrapper id="faq" background="white">
       <Container>
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4 bg-emerald-50 text-emerald-700 border-emerald-200">
+        <div className="text-center mb-10 sm:mb-16">
+          <Badge variant="secondary" className="mb-4 border border-orange-200">
             Common Questions
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display text-slate-900">
-            Frequently Asked <span className="text-emerald-600">Questions</span>
+            Frequently Asked <span className="text-orange-600">Questions</span>
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto">
             Everything you need to know about our programs and services.
@@ -57,18 +57,18 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className={`w-full text-left p-6 rounded-2xl border transition-all duration-300 flex justify-between items-center ${
+                className={`w-full text-left p-4 sm:p-6 rounded-lg border transition-all duration-300 flex justify-between items-center gap-4 ${
                   openIndex === index
-                    ? 'bg-emerald-50/50 border-emerald-200 shadow-sm'
-                    : 'bg-white border-slate-100 hover:border-emerald-100'
+                    ? 'bg-orange-50/60 border-orange-200 shadow-sm'
+                    : 'bg-white border-slate-100 hover:border-orange-100'
                 }`}
               >
-                <span className={`font-semibold text-lg ${openIndex === index ? 'text-emerald-900' : 'text-slate-700'}`}>
+                <span className={`font-semibold text-base sm:text-lg ${openIndex === index ? 'text-orange-950' : 'text-slate-700'}`}>
                   {faq.question}
                 </span>
                 <ChevronDown
                   className={`w-5 h-5 transition-transform duration-300 ${
-                    openIndex === index ? 'rotate-180 text-emerald-600' : 'text-slate-400'
+                    openIndex === index ? 'rotate-180 text-orange-600' : 'text-slate-400'
                   }`}
                 />
               </button>
@@ -81,7 +81,7 @@ export default function FAQ() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="p-6 pt-2 text-slate-600 leading-relaxed border-x border-b border-emerald-100/50 rounded-b-2xl bg-emerald-50/30 mx-2">
+                    <div className="p-4 sm:p-6 pt-2 text-slate-600 leading-relaxed border-x border-b border-orange-100/70 rounded-b-lg bg-orange-50/30 mx-2">
                       {faq.answer}
                     </div>
                   </motion.div>

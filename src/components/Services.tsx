@@ -12,26 +12,20 @@ export default function Services() {
 
   return (
     <SectionWrapper id="services" background="default" className="relative">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-indigo-200/20 rounded-full blur-3xl -translate-x-1/2" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/4" />
-      </div>
-
       <Container>
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4 bg-indigo-50 text-indigo-700 border-indigo-200">
+        <div className="text-center mb-10 sm:mb-16">
+          <Badge variant="secondary" className="mb-4 border border-orange-200">
             Our Expertise
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display text-slate-900">
-            Development <span className="text-indigo-600">Services</span>
+            Development <span className="text-orange-600">Services</span>
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto">
             We build scalable, high-performance digital solutions to help your business grow.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 mb-12 sm:mb-16">
           {SERVICES.slice(0, 6).map((service, index) => (
             <motion.div
               key={service.id}
@@ -43,18 +37,16 @@ export default function Services() {
             >
               <Card 
                 variant="glass" 
-                className="group h-full p-8 hover:border-indigo-200 flex flex-col relative overflow-hidden"
+                className="group h-full p-5 sm:p-6 hover:border-orange-200 flex flex-col relative overflow-hidden"
                 hoverEffect={true}
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500 ease-out" />
-                
                 <div className="relative z-10 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300 shadow-sm">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-slate-950 transition-colors duration-300 shadow-sm">
                     {service.icon}
                   </div>
                 </div>
 
-                <h3 className="relative z-10 text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                <h3 className="relative z-10 text-xl font-bold text-slate-900 mb-3 group-hover:text-orange-600 transition-colors">
                   {service.title}
                 </h3>
                 
@@ -63,7 +55,7 @@ export default function Services() {
                 </p>
 
                 <div className="relative z-10 pt-4 border-t border-slate-100/50">
-                  <span className="inline-flex items-center text-sm font-medium text-indigo-600 group-hover:translate-x-2 transition-transform duration-300 cursor-pointer">
+                  <span className="inline-flex items-center text-sm font-medium text-orange-600 group-hover:translate-x-2 transition-transform duration-300 cursor-pointer">
                     Learn more <ArrowRight size={16} className="ml-1" />
                   </span>
                 </div>
@@ -74,7 +66,7 @@ export default function Services() {
 
         <div className="text-center">
           <PrimaryButton 
-            className="px-8 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 shadow-indigo-200"
+            className="px-8 py-4 text-lg shadow-orange-200"
             onClick={() => {
               navigate('/services');
               window.scrollTo(0, 0);

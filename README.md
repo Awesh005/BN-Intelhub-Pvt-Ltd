@@ -54,13 +54,9 @@ npm run preview
 
 ## Environment Variables
 
-If you use the Gemini API, create a `.env` file in the project root:
+This project is a static frontend. Do not expose private API keys in `.env` for browser-side use.
 
-```bash
-GEMINI_API_KEY=your_api_key_here
-```
-
-Vite is configured in `vite.config.ts` to expose this key on `process.env.GEMINI_API_KEY` for client usage.
+If you later add AI or backend integrations, keep secrets on the server side and call them through a protected API route or backend service.
 
 ## Deployment
 
@@ -71,6 +67,8 @@ This is a static SPA; you can deploy the `dist` folder to:
 - Any static hosting (S3 + CloudFront, Nginx, Apache, etc.)
 
 Ensure that your hosting platform is configured to **serve `index.html` for unknown routes** (SPA fallback) so client-side routing (e.g., `/about`, `/services`, `/internships`) works correctly.
+
+For Apache/Hostinger, deploy the built contents of `dist/` and keep the generated `.htaccess` file in the site root.
 
 ## Key Features
 

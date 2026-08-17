@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { CheckCircle, Code, Smartphone, Database, Shield, Cpu, Server, Wifi, Layers, User, FileText, Clock, Smile, Briefcase, GraduationCap, Users, Monitor, Megaphone, Settings, BarChart, TrendingUp, UserCheck, Search } from 'lucide-react';
+import { CheckCircle, Code, Smartphone, Database, Cpu, Server, Wifi, Layers, User, FileText, Clock, Smile, Briefcase, GraduationCap, Users, Monitor, Megaphone, Settings, BarChart, TrendingUp, UserCheck, Search } from 'lucide-react';
 import { SectionWrapper, Container } from '../components/ui/Layout';
 import { Badge } from '../components/ui/Badge';
 import { Card } from '../components/ui/Cards';
@@ -8,20 +8,31 @@ import Internships from '../components/Internships';
 import InternshipEnquiryModal from '../components/InternshipEnquiryModal';
 
 const colorMap: Record<string, { bg: string; bgHover: string; bgLight: string; text: string; shadow: string }> = {
-  blue: { bg: 'bg-blue-600', bgHover: 'hover:bg-blue-700', bgLight: 'bg-blue-50', text: 'text-blue-600', shadow: 'shadow-blue-200' },
-  green: { bg: 'bg-green-600', bgHover: 'hover:bg-green-700', bgLight: 'bg-green-50', text: 'text-green-600', shadow: 'shadow-green-200' },
-  purple: { bg: 'bg-purple-600', bgHover: 'hover:bg-purple-700', bgLight: 'bg-purple-50', text: 'text-purple-600', shadow: 'shadow-purple-200' },
-  red: { bg: 'bg-red-600', bgHover: 'hover:bg-red-700', bgLight: 'bg-red-50', text: 'text-red-600', shadow: 'shadow-red-200' },
-  orange: { bg: 'bg-orange-600', bgHover: 'hover:bg-orange-700', bgLight: 'bg-orange-50', text: 'text-orange-600', shadow: 'shadow-orange-200' },
-  indigo: { bg: 'bg-indigo-600', bgHover: 'hover:bg-indigo-700', bgLight: 'bg-indigo-50', text: 'text-indigo-600', shadow: 'shadow-indigo-200' },
-  cyan: { bg: 'bg-cyan-600', bgHover: 'hover:bg-cyan-700', bgLight: 'bg-cyan-50', text: 'text-cyan-600', shadow: 'shadow-cyan-200' },
-  pink: { bg: 'bg-pink-600', bgHover: 'hover:bg-pink-700', bgLight: 'bg-pink-50', text: 'text-pink-600', shadow: 'shadow-pink-200' },
+  blue: { bg: 'bg-orange-500', bgHover: 'hover:bg-orange-400', bgLight: 'bg-orange-50', text: 'text-orange-600', shadow: 'shadow-orange-200' },
+  green: { bg: 'bg-amber-500', bgHover: 'hover:bg-amber-400', bgLight: 'bg-amber-50', text: 'text-amber-700', shadow: 'shadow-amber-200' },
+  purple: { bg: 'bg-slate-800', bgHover: 'hover:bg-slate-700', bgLight: 'bg-orange-50', text: 'text-orange-600', shadow: 'shadow-slate-200' },
+  red: { bg: 'bg-orange-600', bgHover: 'hover:bg-orange-500', bgLight: 'bg-orange-50', text: 'text-orange-700', shadow: 'shadow-orange-200' },
+  orange: { bg: 'bg-orange-500', bgHover: 'hover:bg-orange-400', bgLight: 'bg-orange-50', text: 'text-orange-600', shadow: 'shadow-orange-200' },
+  indigo: { bg: 'bg-slate-800', bgHover: 'hover:bg-slate-700', bgLight: 'bg-amber-50', text: 'text-amber-700', shadow: 'shadow-slate-200' },
+  cyan: { bg: 'bg-amber-500', bgHover: 'hover:bg-amber-400', bgLight: 'bg-amber-50', text: 'text-amber-700', shadow: 'shadow-amber-200' },
+  pink: { bg: 'bg-orange-500', bgHover: 'hover:bg-orange-400', bgLight: 'bg-orange-50', text: 'text-orange-600', shadow: 'shadow-orange-200' },
   slate: { bg: 'bg-slate-600', bgHover: 'hover:bg-slate-700', bgLight: 'bg-slate-50', text: 'text-slate-600', shadow: 'shadow-slate-200' },
 };
 
 export default function InternshipPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState("");
+
+  const openModal = (programTitle?: string) => {
+    setSelectedProgram(programTitle ?? "");
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProgram("");
+  };
 
   const techPrograms = [
     {
@@ -59,18 +70,6 @@ export default function InternshipPage() {
         "Specializations": "NLP, Computer Vision, Time Series"
       },
       color: "purple"
-    },
-    {
-      title: "Cyber Security",
-      icon: <Shield className="w-6 h-6" />,
-      duration: "5-6 Months",
-      tools: {
-        "Basics": "Networking & OS, Security fundamentals (CIA, encryption)",
-        "Web": "Web & network security (OWASP Top 10), System hardening",
-        "Advanced": "Ethical hacking tools & pentesting, Cloud & advanced security",
-        "Practices": "MFA, Secure coding, Backup & disaster recovery"
-      },
-      color: "red"
     },
     {
       title: "Robotics",
@@ -209,39 +208,39 @@ export default function InternshipPage() {
 
   return (
     <div className="pt-20">
-      <Internships onEnrollClick={() => setIsModalOpen(true)} />
+      <Internships onEnrollClick={() => openModal()} />
 
       <SectionWrapper background="light">
         <Container>
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 border-blue-200 bg-white text-blue-700">
+          <div className="text-center mb-12 sm:mb-16">
+            <Badge variant="outline" className="mb-4 bg-white">
               Our Programs
             </Badge>
-            <h2 className="text-3xl font-bold font-display text-slate-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900 mb-4">
               Choose Your Internship Program
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto mb-8">
+            <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mb-8">
               Comprehensive training with hands-on experience in the latest technologies and management skills.
             </p>
 
-            <div className="max-w-md mx-auto relative">
+            <div className="max-w-full sm:max-w-md mx-auto relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search for internships (e.g., Web, Python, Marketing)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all shadow-sm"
+                className="w-full pl-12 pr-4 py-3 text-sm sm:text-base rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all shadow-sm"
               />
             </div>
           </div>
 
           {filteredTechPrograms.length > 0 && (
             <div className="mb-12">
-              <h3 className="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-600 pl-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 border-l-4 border-orange-500 pl-4">
                 For IT / Technical Students
               </h3>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8">
                 {filteredTechPrograms.map((program, index) => (
                 <motion.div
                   key={index}
@@ -250,36 +249,34 @@ export default function InternshipPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="h-full p-6 border-slate-200 hover:border-blue-300 transition-colors shadow-sm hover:shadow-md relative">
-                    <div className="absolute top-6 right-6">
-                      <button 
-                        onClick={() => setIsModalOpen(true)}
-                        className={`px-4 py-2 rounded-lg font-semibold text-white text-sm ${colorMap[program.color as keyof typeof colorMap].bg} ${colorMap[program.color as keyof typeof colorMap].bgHover} transition-colors shadow-md ${colorMap[program.color as keyof typeof colorMap].shadow}`}
-                      >
-                        Enroll Now
-                      </button>
-                    </div>
-                    <div className="flex items-start justify-between mb-6">
+                  <Card className="h-full p-5 sm:p-6 border-slate-200 hover:border-orange-300 transition-colors shadow-sm hover:shadow-md">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                       <div className="flex items-center gap-4">
                         <div className={`p-3 rounded-xl ${colorMap[program.color as keyof typeof colorMap].bgLight} ${colorMap[program.color as keyof typeof colorMap].text}`}>
                           {program.icon}
                         </div>
                         <div>
-                          <h3 className="text-2xl font-extrabold text-blue-700 mb-1 pr-24">{program.title}</h3>
-                          <span className="text-sm font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md inline-block">
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-orange-700 mb-1">{program.title}</h3>
+                          <span className="text-xs sm:text-sm font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md inline-block">
                             {program.duration}
                           </span>
                         </div>
                       </div>
+                      <button 
+                        onClick={() => openModal(program.title)}
+                        className={`w-full sm:w-auto sm:self-start px-4 py-2 rounded-lg font-semibold text-white text-sm ${colorMap[program.color as keyof typeof colorMap].bg} ${colorMap[program.color as keyof typeof colorMap].bgHover} transition-colors shadow-md ${colorMap[program.color as keyof typeof colorMap].shadow}`}
+                      >
+                        Enroll Now
+                      </button>
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Tools & Technologies</h4>
+                      <h4 className="text-xs sm:text-sm font-semibold text-slate-700 uppercase tracking-wider">Tools & Technologies</h4>
                       <div className="grid gap-3">
                         {Object.entries(program.tools).map(([key, value], i) => (
-                          <div key={i} className="flex gap-3 text-sm">
-                            <span className="font-medium text-slate-700 min-w-[100px]">{key}:</span>
-                            <span className="text-slate-600">{value}</span>
+                          <div key={i} className="flex flex-col sm:flex-row sm:gap-3 gap-1 text-sm">
+                            <span className="font-medium text-slate-700 min-w-[90px] sm:min-w-[110px]">{key}:</span>
+                            <span className="text-slate-600 break-words">{value}</span>
                           </div>
                         ))}
                       </div>
@@ -293,10 +290,10 @@ export default function InternshipPage() {
 
           {filteredManagementPrograms.length > 0 && (
             <div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-pink-600 pl-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 border-l-4 border-amber-500 pl-4">
                 For BBA / MBA Students
               </h3>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8">
                 {filteredManagementPrograms.map((program, index) => (
                 <motion.div
                   key={index}
@@ -305,36 +302,34 @@ export default function InternshipPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="h-full p-6 border-slate-200 hover:border-pink-300 transition-colors shadow-sm hover:shadow-md relative">
-                    <div className="absolute top-6 right-6">
-                      <button 
-                        onClick={() => setIsModalOpen(true)}
-                        className={`px-4 py-2 rounded-lg font-semibold text-white text-sm ${colorMap[program.color as keyof typeof colorMap].bg} ${colorMap[program.color as keyof typeof colorMap].bgHover} transition-colors shadow-md ${colorMap[program.color as keyof typeof colorMap].shadow}`}
-                      >
-                        Enroll Now
-                      </button>
-                    </div>
-                    <div className="flex items-start justify-between mb-6">
+                  <Card className="h-full p-5 sm:p-6 border-slate-200 hover:border-amber-300 transition-colors shadow-sm hover:shadow-md">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                       <div className="flex items-center gap-4">
                         <div className={`p-3 rounded-xl ${colorMap[program.color as keyof typeof colorMap].bgLight} ${colorMap[program.color as keyof typeof colorMap].text}`}>
                           {program.icon}
                         </div>
                         <div>
-                          <h3 className="text-2xl font-extrabold text-pink-700 mb-1 pr-24">{program.title}</h3>
-                          <span className="text-sm font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md inline-block">
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-amber-700 mb-1">{program.title}</h3>
+                          <span className="text-xs sm:text-sm font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md inline-block">
                             {program.duration}
                           </span>
                         </div>
                       </div>
+                      <button 
+                        onClick={() => openModal(program.title)}
+                        className={`w-full sm:w-auto sm:self-start px-4 py-2 rounded-lg font-semibold text-white text-sm ${colorMap[program.color as keyof typeof colorMap].bg} ${colorMap[program.color as keyof typeof colorMap].bgHover} transition-colors shadow-md ${colorMap[program.color as keyof typeof colorMap].shadow}`}
+                      >
+                        Enroll Now
+                      </button>
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Tools & Skills</h4>
+                      <h4 className="text-xs sm:text-sm font-semibold text-slate-700 uppercase tracking-wider">Tools & Skills</h4>
                       <div className="grid gap-3">
                         {Object.entries(program.tools).map(([key, value], i) => (
-                          <div key={i} className="flex gap-3 text-sm">
-                            <span className="font-medium text-slate-700 min-w-[100px]">{key}:</span>
-                            <span className="text-slate-600">{value}</span>
+                          <div key={i} className="flex flex-col sm:flex-row sm:gap-3 gap-1 text-sm">
+                            <span className="font-medium text-slate-700 min-w-[90px] sm:min-w-[110px]">{key}:</span>
+                            <span className="text-slate-600 break-words">{value}</span>
                           </div>
                         ))}
                       </div>
@@ -356,13 +351,11 @@ export default function InternshipPage() {
 
       <SectionWrapper background="white">
         <Container>
-          <div className="bg-slate-900 rounded-3xl p-8 md:p-12 text-white overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-            
+          <div className="bg-slate-900 rounded-lg p-6 sm:p-8 md:p-12 text-white overflow-hidden relative">
             <div className="relative z-10">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold font-display mb-4">All-Inclusive Internship Package</h2>
-                <p className="text-slate-400 max-w-2xl mx-auto">
+                <h2 className="text-2xl sm:text-3xl font-bold font-display mb-4">All-Inclusive Internship Package</h2>
+                <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
                   Every internship program comes with our comprehensive support system to ensure your success.
                 </p>
               </div>
@@ -375,9 +368,9 @@ export default function InternshipPage() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-blue-500/50 transition-colors"
+                    className="bg-slate-800/50 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-slate-700 hover:border-orange-500/50 transition-colors"
                   >
-                    <div className="flex items-center gap-3 mb-3 text-blue-400">
+                    <div className="flex items-center gap-3 mb-3 text-orange-300">
                       {pkg.icon}
                       <h3 className="font-bold text-white">{pkg.name}</h3>
                     </div>
@@ -392,7 +385,11 @@ export default function InternshipPage() {
         </Container>
       </SectionWrapper>
 
-      <InternshipEnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <InternshipEnquiryModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        selectedProgram={selectedProgram}
+      />
     </div>
   );
 }

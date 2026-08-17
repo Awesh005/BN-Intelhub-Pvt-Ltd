@@ -7,7 +7,7 @@ export default function Stats() {
   return (
     <SectionWrapper background="light">
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 lg:gap-8">
           {STATS.map((stat, index) => (
             <motion.div
               key={index}

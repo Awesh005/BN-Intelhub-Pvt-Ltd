@@ -5,7 +5,7 @@ interface SectionWrapperProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
   className?: string;
   id?: string;
-  background?: 'default' | 'light' | 'dark' | 'gradient';
+  background?: 'default' | 'light' | 'dark' | 'gradient' | 'white';
 }
 
 export function SectionWrapper({ 
@@ -17,16 +17,17 @@ export function SectionWrapper({
 }: SectionWrapperProps) {
   const backgrounds = {
     default: "bg-white",
-    light: "bg-slate-50 border-y border-slate-200",
+    white: "bg-white",
+    light: "bg-orange-50/35 border-y border-orange-100",
     dark: "bg-slate-900 text-white",
-    gradient: "bg-gradient-to-b from-white to-blue-50"
+    gradient: "bg-gradient-to-b from-orange-50/60 to-white"
   };
 
   return (
     <section 
       id={id}
       className={cn(
-        "py-20 md:py-24 relative overflow-hidden",
+        "py-14 sm:py-16 md:py-24 relative overflow-hidden",
         backgrounds[background],
         className
       )}
@@ -45,7 +46,7 @@ interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
 export function Container({ children, className, ...props }: ContainerProps) {
   return (
     <div 
-      className={cn("max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", className)}
+      className={cn("w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", className)}
       {...props}
     >
       {children}

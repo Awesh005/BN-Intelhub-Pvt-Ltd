@@ -14,7 +14,7 @@ export function PrimaryButton({ children, className, icon, ...props }: ButtonPro
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        "group relative px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold text-base overflow-hidden transition-all shadow-md hover:shadow-lg hover:bg-blue-700",
+        "group relative inline-flex items-center justify-center px-6 py-3 bg-orange-500 text-slate-950 rounded-lg font-semibold text-base overflow-hidden transition-all shadow-md shadow-orange-950/10 hover:shadow-lg hover:bg-orange-400 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:text-white disabled:shadow-none",
         className
       )}
       {...props}
@@ -33,7 +33,7 @@ export function SecondaryButton({ children, className, icon, ...props }: ButtonP
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        "px-6 py-3 bg-white text-slate-700 border border-slate-200 rounded-lg font-semibold text-base hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm",
+        "inline-flex items-center justify-center px-6 py-3 bg-white text-slate-800 border border-slate-200 rounded-lg font-semibold text-base hover:bg-orange-50 hover:border-orange-200 transition-all shadow-sm disabled:cursor-not-allowed disabled:opacity-60",
         className
       )}
       {...props}
